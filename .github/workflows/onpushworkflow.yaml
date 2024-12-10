@@ -23,5 +23,5 @@ jobs:
         with:
           appSourcePath: ${{ github.workspace }}
           acrName: acrwestus2abcd
-          containerAppName: mywebapp
+          containerAppName: mystreamlitwebapp
           resourceGroup: rg-wus2-12091247

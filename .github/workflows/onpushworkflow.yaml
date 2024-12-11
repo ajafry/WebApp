@@ -22,6 +22,6 @@ jobs:
         uses: azure/container-apps-deploy-action@v1
         with:
           appSourcePath: ${{ github.workspace }}
-          acrName: acrwestus2abcd
-          containerAppName: mystreamlitwebapp
-          resourceGroup: rg-wus2-12091247
+          acrName: acrwestus2bdo
+          containerAppName: mywebapp
+          resourceGroup: rg-wus2-12100900

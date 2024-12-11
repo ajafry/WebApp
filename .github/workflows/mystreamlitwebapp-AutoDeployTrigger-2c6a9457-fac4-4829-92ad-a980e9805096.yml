@@ -1,0 +1,44 @@
+name: Trigger auto deployment for mystreamlitwebapp
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/mystreamlitwebapp-AutoDeployTrigger-2c6a9457-fac4-4829-92ad-a980e9805096.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.MYSTREAMLITWEBAPP_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}
+          _dockerfilePathKey_: _dockerfilePath_
+          registryUrl: acrwestus2abcd.azurecr.io
+          registryUsername: ${{ secrets.MYSTREAMLITWEBAPP_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.MYSTREAMLITWEBAPP_REGISTRY_PASSWORD }}
+          containerAppName: mystreamlitwebapp
+          resourceGroup: rg-wus2-12091247
+          imageToBuild: acrwestus2abcd.azurecr.io/github-action/container-app:${{ github.sha }}
+          
+            
+
+     
+
